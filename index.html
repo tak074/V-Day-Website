@@ -15,7 +15,7 @@
       --bg-1:#ffdee9; --bg-2:#ffd1d1; --bg-3:#ffe8f2;
       --primary:#e11d48; --secondary:#fb7185; --accent:#a855f7;
       --text:#1f2937; --muted:#6b7280;
-      --card:rgba(255,255,255,0.72); --card-strong:rgba(255,255,255,0.86);
+      --card:rgba(255,255,255,0.72);
       --shadow:0 18px 60px rgba(17,24,39,0.14);
       --shadow-soft:0 10px 28px rgba(17,24,39,0.10);
       --radius-xl:28px;
@@ -26,7 +26,7 @@
       --safe-pad-b:max(16px, env(safe-area-inset-bottom));
 
       --btn-h:52px;
-      --edge-padding:12px; /* min padding from viewport edges */
+      --edge-padding:12px;
     }
 
     *{ box-sizing:border-box; }
@@ -183,15 +183,17 @@
       border:1px solid rgba(31,41,55,0.16);
       box-shadow:0 14px 34px rgba(17,24,39,0.10);
     }
-    .btn-no:hover{ filter: brightness(1.02); }
-
-    /* No roaming: fixed + NO rotation/shake */
     .btn-no.is-floating{
       position:fixed;
       left:0;
       top:0;
       z-index:6;
       transform: translate3d(var(--x, 0px), var(--y, 0px), 0);
+    }
+
+    /* Buttons disappear after Yes */
+    .btn-row.is-hidden{
+      display:none;
     }
 
     canvas#confetti{ position:fixed; inset:0; pointer-events:none; z-index:5; }
@@ -270,23 +272,18 @@
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       const CONFIG = {
-        storageKey: "valentineAccepted_v4",
-
-        // Requested: only run when within ~7px of the edge
+        storageKey: "valentineAccepted_v5",
         nearEdgePx: 7,
         nearEdgeTouchPx: 22,
-
-        edgePadding: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--edge-padding")) || 12,
-
+        edgePadding: 12,
         avoidYesGap: 16,
         confettiBurstCount: 180,
-
-        // Fast->slow: dash duration
         dashMs: SLOW ? 160 : 220,
-
-        // Travel distance tuning
         runDistMin: SLOW ? 220 : 320,
-        runDistVar: SLOW ? 120 : 180
+        runDistVar: SLOW ? 120 : 180,
+
+        // NEW: Tip copy after Yes
+        tipAfterYes: "Never doubted you for a second. I knew you'd say Yes!!!"
       };
 
       const els = {
@@ -305,14 +302,12 @@
       };
 
       function setAria(msg){
-        if (!els.ariaLive) return;
         els.ariaLive.textContent = "";
         setTimeout(() => { els.ariaLive.textContent = msg; }, 10);
       }
 
       function hideOnError(img){
-        if (!img) return;
-        img.addEventListener("error", () => {
+        img?.addEventListener("error", () => {
           img.style.display = "none";
           setAria("Image couldn't load. Check filename and case.");
         });
@@ -321,24 +316,41 @@
       hideOnError(els.afterImg);
 
       let tipShown = false;
+      function showTip(text){
+        if (text) els.hint.textContent = text;
+        els.hint.classList.add("show");
+        tipShown = true;
+      }
       function showTipOnce(){
         if (tipShown) return;
+        els.hint.classList.add("show");
         tipShown = true;
-        els.hint?.classList.add("show");
       }
 
       function setAcceptedUI(){
         els.headline.textContent = "Yay!! You’re my Valentine 💘";
         els.subcopy.textContent = "";
         els.after.classList.add("show");
-        if (els.beforeWrap) els.beforeWrap.style.display = "none";
+        els.beforeWrap.style.display = "none";
+
+        // NEW: hide buttons and change tip copy
+        els.btnRow.classList.add("is-hidden");
+        showTip(CONFIG.tipAfterYes);
       }
+
       function setPreUI(){
         els.headline.textContent = "Hey Allison, will you be my Valentine?";
         els.subcopy.textContent = 'My legs may be weak from running but my heart will stay strong....unless you say "No"';
         els.after.classList.remove("show");
-        if (els.beforeWrap) els.beforeWrap.style.display = "grid";
+        els.beforeWrap.style.display = "grid";
+        els.btnRow.classList.remove("is-hidden");
+
+        // Reset tip to default (hidden)
+        tipShown = false;
+        els.hint.textContent = 'Tip: the “No” button gets shy. Try again. 😇';
+        els.hint.classList.remove("show");
       }
+
       function loadPersisted(){
         const accepted = localStorage.getItem(CONFIG.storageKey) === "1";
         accepted ? setAcceptedUI() : setPreUI();
@@ -464,16 +476,7 @@
         setAria("Yay! Valentine accepted.");
       }
 
-      /* -----------------------
-         No button roaming
-         Key fixes:
-         1) We DO NOT listen on window pointermove.
-            We ONLY listen on the No button itself (pointermove/pointerenter),
-            so it cannot "detach" unless you're actually near/over it.
-         2) We keep a placeholder in the row so YES never shifts.
-         3) No rotation/shake.
-         ----------------------- */
-
+      /* No roaming */
       const state = {
         evasionEnabled: !DEBUG,
         floating: false,
@@ -535,7 +538,6 @@
           const ry = rand(b.minY, b.maxY);
           if (!overlapsYes(rx,ry)) return {x:rx,y:ry};
         }
-
         return {x:b.minX, y:b.minY};
       }
 
@@ -547,7 +549,6 @@
       function detachNoToViewport(){
         if (state.floating) return;
 
-        // Create placeholder with same size to keep YES in place forever
         const r = els.no.getBoundingClientRect();
         state.noW = r.width;
         state.noH = r.height;
@@ -560,7 +561,6 @@
 
         els.btnRow.replaceChild(ph, els.no);
 
-        // Set initial fixed pos exactly where it was
         state.x = state.targetX = clamp(r.left, 0, window.innerWidth - state.noW);
         state.y = state.targetY = clamp(r.top,  0, window.innerHeight - state.noH);
 
@@ -574,7 +574,6 @@
         setNoTransform();
       }
 
-      // Distance from pointer to rect edge (0 if inside)
       function distToRectEdge(px,py,rect){
         const dx = Math.max(rect.left - px, 0, px - rect.right);
         const dy = Math.max(rect.top  - py, 0, py - rect.bottom);
@@ -592,7 +591,6 @@
         const d  = Math.hypot(dx,dy) || 1;
         dx/=d; dy/=d;
 
-        // no shake: we still allow a mild sideways steering without rotation
         const side = (Math.random()<0.5?-1:1);
         const sx = -dy*side;
         const sy =  dx*side;
@@ -609,9 +607,7 @@
         return resolveAvoidYes(tx,ty);
       }
 
-      function startDash(){
-        state.dashUntil = performance.now() + CONFIG.dashMs;
-      }
+      function startDash(){ state.dashUntil = performance.now() + CONFIG.dashMs; }
 
       function ensureRaf(){
         if (prefersReducedMotion) return;
@@ -627,7 +623,6 @@
         const now = performance.now();
         const inDash = now < state.dashUntil;
 
-        // Fast -> slow (dash then glide)
         const stiffness = inDash ? (SLOW ? 0.26 : 0.32) : (SLOW ? 0.10 : 0.14);
         const damping   = inDash ? 0.68 : 0.86;
 
@@ -660,10 +655,8 @@
         state.rafId = moving ? requestAnimationFrame(tick) : 0;
       }
 
-      // ONLY run when within 7px of edge
       function maybeRun(px,py,isTouch){
         if (!state.evasionEnabled) return;
-
         const rect = els.no.getBoundingClientRect();
         const threshold = isTouch ? CONFIG.nearEdgeTouchPx : CONFIG.nearEdgePx;
         const d = distToRectEdge(px,py,rect);
@@ -678,7 +671,6 @@
         ensureRaf();
       }
 
-      // Event handlers on the No button only (prevents auto-detach)
       function onNoPointerMove(e){ maybeRun(e.clientX, e.clientY, false); }
       function onNoPointerEnter(e){ maybeRun(e.clientX, e.clientY, false); }
       function onNoTouchStart(e){
@@ -743,15 +735,8 @@
 
       function boot(){
         loadPersisted();
-        els.yes.addEventListener("click", () => {
-          localStorage.setItem(CONFIG.storageKey, "1");
-          setAcceptedUI();
-          pulseYes();
-          confetti.burstAtElement(els.yes, CONFIG.confettiBurstCount);
-          setAria("Yay! Valentine accepted.");
-        });
+        els.yes.addEventListener("click", accept);
 
-        // Attach events ONLY to No (prevents early movement)
         els.no.addEventListener("pointermove", onNoPointerMove, { passive:true });
         els.no.addEventListener("pointerenter", onNoPointerEnter, { passive:true });
         els.no.addEventListener("touchstart", onNoTouchStart, { passive:true });
