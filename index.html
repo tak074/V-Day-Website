@@ -204,7 +204,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none; /* CUSTOMIZE: set to block once you add an image */
+      display: block; /* CUSTOMIZE: set to block once you add an image */
     }
 
     .photo::after {
@@ -410,13 +410,13 @@
 
       <div class="badge" aria-hidden="true">
         <span>💌</span>
-        <span>tiny love website</span>
+        <span>made with love (brick by brick)</span>
       </div>
 
-      <h1 class="headline" id="headline">Will you be my Valentine?</h1>
+      <h1 class="headline" id="headline">Hey Allison, will you be my Valentine?</h1>
       <p class="subcopy" id="subcopy">
         <!-- CUSTOMIZE: Sweet line under headline -->
-        I made this page just for you. No pressure… except one button is kinda dramatic.
+        Made for one and only funsies boop.
       </p>
 
       <div class="divider" aria-hidden="true"></div>
@@ -429,28 +429,14 @@
                  1) Put a base64 image here, or 2) replace with a local file and keep it same-folder.
                  Then set display:block for img in CSS above.
             -->
-            <img id="photoImg" alt="A cute photo of us" src="" />
+            <img id="photoImg" alt="A cute photo of us" src="/Users/taeksukim/Desktop/untitled folder/V-Day-Website/IMG_7852.JPG" />
           </div>
           <div>
             <h2 id="afterTitle">Best. Decision. Ever. ❤️</h2>
             <p id="afterMsg">
               <!-- CUSTOMIZE: After-yes message -->
-              Can’t wait to celebrate us. You + me = unstoppable.
+              Can’t wait to celebrate our very 2nd Valentines together :) Can't wait to see how hot you'll look that day
             </p>
-            <div class="actions">
-              <a class="small-link" id="dateLink" href="#" rel="nofollow">
-                <!-- inline mini heart -->
-                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 21s-7.5-4.6-7.5-11A4.5 4.5 0 0 1 9 5.5c1.3 0 2.5.6 3 1.5.5-.9 1.7-1.5 3-1.5A4.5 4.5 0 0 1 19.5 10c0 6.4-7.5 11-7.5 11z"
-                        fill="rgba(225,29,72,0.95)"/>
-                </svg>
-                Pick a date
-              </a>
-
-              <button class="btn-no" id="resetBtn" type="button" style="display:none; min-width:auto; padding:0 14px;">
-                Reset
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -476,11 +462,11 @@
         ========================================================= */
       const CONFIG = {
         // CUSTOMIZE: Confetti intensity (hearts per burst)
-        confettiBurstCount: 140,
+        confettiBurstCount: 440,
 
         // CUSTOMIZE: Evasion tuning
-        evadeDistance: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--evade-distance")) || 110,
-        edgePadding: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--edge-padding")) || 12,
+        evadeDistance: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--evade-distance")) || 210,
+        edgePadding: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--edge-padding")) || 30,
 
         // Prevent overlap with Yes
         minGapFromYes: 14,
@@ -916,15 +902,15 @@
       function setAcceptedUI() {
         // CUSTOMIZE: Confirmation text
         els.headline.textContent = "Yay!! You’re my Valentine 💘";
-        els.subcopy.textContent = "I’m officially the luckiest. (And I promise that button was just being extra.)";
+        els.subcopy.textContent = "I’m officially the luckiest. I was so nervous you would choose the other button";
 
         els.after.classList.add("show");
         els.resetBtn.style.display = DEBUG ? "inline-flex" : "none";
       }
 
       function setPreUI() {
-        els.headline.textContent = "Will you be my Valentine?";
-        els.subcopy.textContent = "I made this page just for you. No pressure… except one button is kinda dramatic.";
+        els.headline.textContent = "Hey Allison, will you be my Valentine?";
+        els.subcopy.textContent = "I made this page just for you. No pressure…";
         els.after.classList.remove("show");
       }
 
