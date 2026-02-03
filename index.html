@@ -4,141 +4,123 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="A cute one-page Valentine question with a mischievous 'No' button and a celebratory 'Yes' moment." />
-
   <meta property="og:title" content="Will you be my Valentine?" />
   <meta property="og:description" content="A tiny Valentine page with a playful twist." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
-
   <title>Will you be my Valentine?</title>
 
   <style>
     :root{
-      --bg-1: #ffdee9;
-      --bg-2: #ffd1d1;
-      --bg-3: #ffe8f2;
-      --primary: #e11d48;
-      --secondary: #fb7185;
-      --accent: #a855f7;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --card: rgba(255,255,255,0.72);
-      --card-strong: rgba(255,255,255,0.86);
-      --shadow: 0 18px 60px rgba(17, 24, 39, 0.14);
-      --shadow-soft: 0 10px 28px rgba(17, 24, 39, 0.10);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
+      --bg-1:#ffdee9; --bg-2:#ffd1d1; --bg-3:#ffe8f2;
+      --primary:#e11d48; --secondary:#fb7185; --accent:#a855f7;
+      --text:#1f2937; --muted:#6b7280;
+      --card:rgba(255,255,255,0.72); --card-strong:rgba(255,255,255,0.86);
+      --shadow:0 18px 60px rgba(17,24,39,0.14);
+      --shadow-soft:0 10px 28px rgba(17,24,39,0.10);
+      --radius-xl:28px;
 
-      --safe-pad: max(16px, env(safe-area-inset-left));
-      --safe-pad-r: max(16px, env(safe-area-inset-right));
-      --safe-pad-t: max(16px, env(safe-area-inset-top));
-      --safe-pad-b: max(16px, env(safe-area-inset-bottom));
+      --safe-pad:max(16px, env(safe-area-inset-left));
+      --safe-pad-r:max(16px, env(safe-area-inset-right));
+      --safe-pad-t:max(16px, env(safe-area-inset-top));
+      --safe-pad-b:max(16px, env(safe-area-inset-bottom));
 
-      --btn-h: 52px;
-
-      /* CUSTOMIZE: "No" behavior */
-      --edge-padding: 12px;     /* min padding from viewport edges */
-      --no-rotation: 7deg;      /* wobble range */
+      --btn-h:52px;
+      --edge-padding:12px; /* min padding from viewport edges */
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      margin: 0;
+      margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--text);
+      color:var(--text);
       background:
         radial-gradient(1200px 800px at 20% 20%, rgba(225,29,72,0.18), transparent 55%),
         radial-gradient(900px 700px at 80% 30%, rgba(168,85,247,0.15), transparent 55%),
         linear-gradient(135deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
-      overflow: hidden;
+      overflow:hidden;
     }
 
-    .bg-hearts{ position: fixed; inset: 0; pointer-events:none; opacity:0.22; transform: translateZ(0); }
-
-    .sr-only {
+    .bg-hearts{ position:fixed; inset:0; pointer-events:none; opacity:0.22; transform:translateZ(0); }
+    .sr-only{
       position:absolute; width:1px; height:1px; padding:0; margin:-1px;
       overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
     }
 
     main{
-      min-height: 100%;
+      min-height:100%;
       display:grid;
       place-items:center;
       padding: calc(var(--safe-pad-t) + 16px) var(--safe-pad-r) calc(var(--safe-pad-b) + 20px) var(--safe-pad);
     }
 
     .card{
-      width: min(780px, 94vw);
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.55);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
+      width:min(780px, 94vw);
+      background:var(--card);
+      border:1px solid rgba(255,255,255,0.55);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       padding: clamp(18px, 4vw, 36px);
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
+      position:relative;
+      overflow:hidden;
+      z-index:2;
     }
 
     .badge{
       display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(225,29,72,0.12);
-      border: 1px solid rgba(225,29,72,0.20);
-      color: #9f1239;
-      font-weight: 800;
-      font-size: 13px;
-      margin-bottom: 14px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(225,29,72,0.12);
+      border:1px solid rgba(225,29,72,0.20);
+      color:#9f1239;
+      font-weight:800;
+      font-size:13px;
+      margin-bottom:14px;
       user-select:none;
     }
 
     .headline{
       font-size: clamp(28px, 4.8vw, 46px);
-      line-height: 1.06;
-      margin: 0 0 10px;
-      letter-spacing: -0.02em;
+      line-height:1.06;
+      margin:0 0 10px;
+      letter-spacing:-0.02em;
     }
 
     .subcopy{
-      margin: 0 0 14px;
-      color: var(--muted);
+      margin:0 0 14px;
+      color:var(--muted);
       font-size: clamp(15px, 2.3vw, 18px);
-      line-height: 1.5;
+      line-height:1.5;
     }
 
     .divider{
-      height: 1px;
+      height:1px;
       background: linear-gradient(to right, transparent, rgba(31,41,55,0.18), transparent);
-      margin: 18px 0 16px;
+      margin:18px 0 16px;
     }
 
-    .memory-wrap{
-      display:grid;
-      place-items:center;
-      margin: 10px 0 10px;
-    }
-
+    .memory-wrap{ display:grid; place-items:center; margin:10px 0 10px; }
     .memory-photo{
       width: clamp(250px, 65vw, 520px);
       aspect-ratio: 4 / 3;
-      border-radius: 22px;
-      object-fit: cover;
-      object-position: 50% 50%;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255,255,255,0.6);
+      border-radius:22px;
+      object-fit:cover;
+      object-position:50% 50%;
+      box-shadow:var(--shadow-soft);
+      border:1px solid rgba(255,255,255,0.6);
       background: rgba(255,255,255,0.35);
       display:block;
     }
 
     .hint{
-      margin: 6px 0 0;
+      margin:6px 0 0;
       color: rgba(31,41,55,0.62);
-      font-size: 13px;
+      font-size:13px;
       text-align:center;
-      opacity: 0;
+      opacity:0;
       transform: translateY(-6px);
       transition: opacity 180ms ease, transform 180ms ease;
       user-select:none;
@@ -146,21 +128,21 @@
     }
     .hint.show{ opacity:1; transform: translateY(0); }
 
-    .after{ display:none; margin-top: 12px; padding-top: 6px; }
+    .after{ display:none; margin-top:12px; padding-top:6px; }
     .after.show{ display:block; }
 
     .button-area{
-      position: relative;
-      height: max(108px, calc(var(--btn-h) + 56px));
-      margin-top: 8px;
-      z-index: 2;
+      position:relative;
+      height:max(108px, calc(var(--btn-h) + 56px));
+      margin-top:8px;
+      z-index:2;
     }
 
     .btn-row{
       position:absolute; left:0; right:0; bottom:0;
       display:flex;
       justify-content:center;
-      gap: 14px;
+      gap:14px;
       align-items:center;
       min-height: calc(var(--btn-h) + 16px);
       user-select:none;
@@ -169,59 +151,54 @@
     button{
       appearance:none;
       -webkit-tap-highlight-color: transparent;
-      font: inherit;
+      font:inherit;
       border:0;
-      border-radius: 999px;
-      height: var(--btn-h);
-      width: min(280px, 40vw);
-      min-width: 140px;
-      padding: 0 18px;
-      font-weight: 900;
-      letter-spacing: 0.2px;
+      border-radius:999px;
+      height:var(--btn-h);
+      width:min(280px, 40vw);
+      min-width:140px;
+      padding:0 18px;
+      font-weight:900;
+      letter-spacing:0.2px;
       cursor:pointer;
-      box-shadow: 0 14px 30px rgba(17,24,39,0.12);
+      box-shadow:0 14px 30px rgba(17,24,39,0.12);
       transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
-      position: relative;
+      position:relative;
       will-change: transform;
       touch-action: manipulation;
     }
-    button:focus-visible{ outline: 3px solid rgba(225,29,72,0.38); outline-offset: 3px; }
+    button:focus-visible{ outline:3px solid rgba(225,29,72,0.38); outline-offset:3px; }
 
     .btn-yes{
       background: linear-gradient(180deg, rgba(225,29,72,0.98), rgba(190,18,60,0.98));
-      color: white;
-      box-shadow: 0 16px 40px rgba(225,29,72,0.25);
+      color:#fff;
+      box-shadow:0 16px 40px rgba(225,29,72,0.25);
     }
-    .btn-yes:hover{ transform: translateY(-1px); box-shadow: 0 20px 52px rgba(225,29,72,0.28); }
+    .btn-yes:hover{ transform: translateY(-1px); box-shadow:0 20px 52px rgba(225,29,72,0.28); }
     .btn-yes:active{ transform: translateY(0) scale(0.98); }
 
     .btn-no{
       background: rgba(255,255,255,0.78);
       color: var(--text);
-      border: 1px solid rgba(31,41,55,0.16);
-      box-shadow: 0 14px 34px rgba(17,24,39,0.10);
+      border:1px solid rgba(31,41,55,0.16);
+      box-shadow:0 14px 34px rgba(17,24,39,0.10);
     }
     .btn-no:hover{ filter: brightness(1.02); }
 
-    /* Once evasion starts, No becomes fixed-position and can roam the whole viewport */
+    /* No roaming: fixed + NO rotation/shake */
     .btn-no.is-floating{
-      position: fixed;
-      left: 0;
-      top: 0;
-      z-index: 6; /* above the card */
-      transform: translate3d(var(--x, 0px), var(--y, 0px), 0) rotate(var(--r, 0deg));
+      position:fixed;
+      left:0;
+      top:0;
+      z-index:6;
+      transform: translate3d(var(--x, 0px), var(--y, 0px), 0);
     }
 
-    canvas#confetti{
-      position: fixed;
-      inset: 0;
-      pointer-events:none;
-      z-index: 5;
-    }
+    canvas#confetti{ position:fixed; inset:0; pointer-events:none; z-index:5; }
 
     @media (prefers-reduced-motion: reduce){
-      button, .hint { transition: none !important; }
-      .btn-no.is-floating { transform: translate3d(var(--x,0px), var(--y,0px), 0) !important; }
+      button, .hint{ transition:none !important; }
+      .btn-no.is-floating{ transform: translate3d(var(--x,0px), var(--y,0px), 0) !important; }
     }
   </style>
 </head>
@@ -275,7 +252,6 @@
       <div class="button-area" id="buttonArea" aria-label="Valentine choices">
         <div class="btn-row" id="btnRow">
           <button class="btn-yes" id="yesBtn" type="button">Yes</button>
-          <!-- Starts here, same row as Yes -->
           <button class="btn-no" id="noBtn" type="button" aria-describedby="noHint">No</button>
         </div>
       </div>
@@ -288,44 +264,31 @@
     (() => {
       "use strict";
 
-      /* =======================
-         FLAGS
-         ======================= */
       const qs = new URLSearchParams(location.search);
-      const DEBUG = qs.get("debug") === "1"; // disables evasion
-      const SLOW  = qs.get("slow") === "1";  // slower movement
-
+      const DEBUG = qs.get("debug") === "1";
+      const SLOW  = qs.get("slow") === "1";
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      /* =======================
-         CONFIG (CUSTOMIZE)
-         ======================= */
       const CONFIG = {
-        storageKey: "valentineAccepted_v3",
+        storageKey: "valentineAccepted_v4",
 
-        // How close the pointer must be before No runs (in px, from button edge)
-        // "about to touch" feel: keep small.
-        nearEdgePx: 14,
+        // Requested: only run when within ~7px of the edge
+        nearEdgePx: 7,
+        nearEdgeTouchPx: 22,
 
-        // Extra near threshold for touch (fingers are bigger)
-        nearEdgeTouchPx: 26,
-
-        // Minimum viewport padding
         edgePadding: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--edge-padding")) || 12,
 
-        // Confetti hearts per burst
+        avoidYesGap: 16,
         confettiBurstCount: 180,
 
-        // Avoid Yes overlap gap
-        avoidYesGap: 16,
+        // Fast->slow: dash duration
+        dashMs: SLOW ? 160 : 220,
 
-        // Movement charm
-        rotationDeg: parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--no-rotation")) || 7
+        // Travel distance tuning
+        runDistMin: SLOW ? 220 : 320,
+        runDistVar: SLOW ? 120 : 180
       };
 
-      /* =======================
-         Elements
-         ======================= */
       const els = {
         headline: document.getElementById("headline"),
         subcopy: document.getElementById("subcopy"),
@@ -347,7 +310,6 @@
         setTimeout(() => { els.ariaLive.textContent = msg; }, 10);
       }
 
-      // Hide images gracefully if missing
       function hideOnError(img){
         if (!img) return;
         img.addEventListener("error", () => {
@@ -358,9 +320,6 @@
       hideOnError(els.beforeImg);
       hideOnError(els.afterImg);
 
-      /* =======================
-         Tip visibility: only after No attempted
-         ======================= */
       let tipShown = false;
       function showTipOnce(){
         if (tipShown) return;
@@ -368,9 +327,6 @@
         els.hint?.classList.add("show");
       }
 
-      /* =======================
-         Accepted state
-         ======================= */
       function setAcceptedUI(){
         els.headline.textContent = "Yay!! You’re my Valentine 💘";
         els.subcopy.textContent = "";
@@ -388,9 +344,7 @@
         accepted ? setAcceptedUI() : setPreUI();
       }
 
-      /* =======================
-         Confetti (tiny hearts)
-         ======================= */
+      /* Confetti (tiny hearts) */
       function Confetti(canvas){
         const ctx = canvas.getContext("2d", { alpha:true });
         const particles = [];
@@ -497,11 +451,7 @@
       function pulseYes(){
         if (prefersReducedMotion) return;
         els.yes.animate(
-          [
-            { transform:"translateY(0) scale(1)" },
-            { transform:"translateY(-1px) scale(1.06)" },
-            { transform:"translateY(0) scale(1)" }
-          ],
+          [{ transform:"translateY(0) scale(1)" }, { transform:"translateY(-1px) scale(1.06)" }, { transform:"translateY(0) scale(1)" }],
           { duration:420, easing:"cubic-bezier(.2,.9,.2,1)" }
         );
       }
@@ -514,36 +464,30 @@
         setAria("Yay! Valentine accepted.");
       }
 
-      /* =======================
-         "No" roaming across viewport
-         - Initially stays inline next to Yes
-         - On first near-touch, we "detach" it into fixed-position roaming mode
-         ======================= */
+      /* -----------------------
+         No button roaming
+         Key fixes:
+         1) We DO NOT listen on window pointermove.
+            We ONLY listen on the No button itself (pointermove/pointerenter),
+            so it cannot "detach" unless you're actually near/over it.
+         2) We keep a placeholder in the row so YES never shifts.
+         3) No rotation/shake.
+         ----------------------- */
+
       const state = {
         evasionEnabled: !DEBUG,
         floating: false,
+        placeholder: null,
         x: 0, y: 0,
         targetX: 0, targetY: 0,
         vx: 0, vy: 0,
         rafId: 0,
-        burstUntil: 0,  // fast -> slow window
+        dashUntil: 0,
         noW: 0, noH: 0,
       };
 
       const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
       const rand  = (a,b)=>a+Math.random()*(b-a);
-
-      function setNoTransform(){
-        let r = 0;
-        if (!prefersReducedMotion){
-          const speed = Math.hypot(state.vx, state.vy);
-          const wobble = Math.min(CONFIG.rotationDeg, speed*120);
-          r = wobble * (Math.random()<0.5?-1:1) + rand(-0.6,0.6);
-        }
-        els.no.style.setProperty("--x", `${state.x.toFixed(2)}px`);
-        els.no.style.setProperty("--y", `${state.y.toFixed(2)}px`);
-        els.no.style.setProperty("--r", `${r.toFixed(2)}deg`);
-      }
 
       function viewportBounds(){
         const pad = CONFIG.edgePadding;
@@ -551,13 +495,11 @@
           minX: pad,
           minY: pad,
           maxX: Math.max(pad, window.innerWidth  - state.noW - pad),
-          maxY: Math.max(pad, window.innerHeight - state.noH - pad),
+          maxY: Math.max(pad, window.innerHeight - state.noH - pad)
         };
       }
 
-      function yesRect(){
-        return els.yes.getBoundingClientRect();
-      }
+      function yesRect(){ return els.yes.getBoundingClientRect(); }
 
       function overlapsYes(x,y){
         const yR = yesRect();
@@ -568,12 +510,12 @@
       }
 
       function resolveAvoidYes(x,y){
-        // If overlapping, push away from yes center; if still bad, random reroll
         if (!overlapsYes(x,y)) return {x,y};
 
         const yR = yesRect();
         const yesCx = (yR.left + yR.right)/2;
         const yesCy = (yR.top  + yR.bottom)/2;
+
         const noCx  = x + state.noW/2;
         const noCy  = y + state.noH/2;
 
@@ -583,38 +525,49 @@
         dx/=mag; dy/=mag;
 
         const b = viewportBounds();
-        let nx = clamp(x + dx*90, b.minX, b.maxX);
-        let ny = clamp(y + dy*70, b.minY, b.maxY);
+        let nx = clamp(x + dx*110, b.minX, b.maxX);
+        let ny = clamp(y + dy*90,  b.minY, b.maxY);
 
-        if (!overlapsYes(nx,ny)) return {x:nx, y:ny};
+        if (!overlapsYes(nx,ny)) return {x:nx,y:ny};
 
-        // reroll a few times
-        for (let i=0;i<12;i++){
+        for (let i=0;i<14;i++){
           const rx = rand(b.minX, b.maxX);
           const ry = rand(b.minY, b.maxY);
           if (!overlapsYes(rx,ry)) return {x:rx,y:ry};
         }
 
-        // fallback: clamp to a corner away from yes
-        return {x: b.minX, y: b.minY};
+        return {x:b.minX, y:b.minY};
+      }
+
+      function setNoTransform(){
+        els.no.style.setProperty("--x", `${state.x.toFixed(2)}px`);
+        els.no.style.setProperty("--y", `${state.y.toFixed(2)}px`);
       }
 
       function detachNoToViewport(){
         if (state.floating) return;
 
-        // Measure current on-screen position so it doesn't "jump"
+        // Create placeholder with same size to keep YES in place forever
         const r = els.no.getBoundingClientRect();
         state.noW = r.width;
         state.noH = r.height;
 
+        const ph = document.createElement("div");
+        ph.setAttribute("aria-hidden", "true");
+        ph.style.width = r.width + "px";
+        ph.style.height = r.height + "px";
+        state.placeholder = ph;
+
+        els.btnRow.replaceChild(ph, els.no);
+
+        // Set initial fixed pos exactly where it was
         state.x = state.targetX = clamp(r.left, 0, window.innerWidth - state.noW);
         state.y = state.targetY = clamp(r.top,  0, window.innerHeight - state.noH);
 
-        // Make it fixed-position roaming
         els.no.classList.add("is-floating");
+        document.body.appendChild(els.no);
         state.floating = true;
 
-        // Ensure no overlap right away
         const safe = resolveAvoidYes(state.x, state.y);
         state.x = state.targetX = safe.x;
         state.y = state.targetY = safe.y;
@@ -631,7 +584,6 @@
       function pickRunTarget(px,py){
         const b = viewportBounds();
 
-        // Choose direction away from pointer; add a sideways component for playful zig-zag
         const noCx = state.x + state.noW/2;
         const noCy = state.y + state.noH/2;
 
@@ -640,31 +592,25 @@
         const d  = Math.hypot(dx,dy) || 1;
         dx/=d; dy/=d;
 
-        // Side-step mix
+        // no shake: we still allow a mild sideways steering without rotation
         const side = (Math.random()<0.5?-1:1);
         const sx = -dy*side;
-        const sy = dx*side;
+        const sy =  dx*side;
+        const mix = 0.25;
 
-        const mix = 0.30;
         const ux = dx*(1-mix) + sx*mix;
         const uy = dy*(1-mix) + sy*mix;
 
-        // Run distance: big enough to feel like it flees across the screen
-        const runDist = (SLOW ? 220 : 320) + Math.random()*140;
+        const runDist = CONFIG.runDistMin + Math.random()*CONFIG.runDistVar;
 
-        let tx = state.x + ux*runDist;
-        let ty = state.y + uy*runDist;
+        let tx = clamp(state.x + ux*runDist, b.minX, b.maxX);
+        let ty = clamp(state.y + uy*runDist, b.minY, b.maxY);
 
-        tx = clamp(tx, b.minX, b.maxX);
-        ty = clamp(ty, b.minY, b.maxY);
-
-        const safe = resolveAvoidYes(tx,ty);
-        return safe;
+        return resolveAvoidYes(tx,ty);
       }
 
-      function startBurst(){
-        // Fast -> slow: for the first 220ms move aggressively
-        state.burstUntil = performance.now() + (SLOW ? 180 : 220);
+      function startDash(){
+        state.dashUntil = performance.now() + CONFIG.dashMs;
       }
 
       function ensureRaf(){
@@ -679,11 +625,11 @@
         }
 
         const now = performance.now();
-        const inBurst = now < state.burstUntil;
+        const inDash = now < state.dashUntil;
 
-        // Fast -> slow spring parameters
-        const stiffness = inBurst ? (SLOW ? 0.22 : 0.28) : (SLOW ? 0.10 : 0.14);
-        const damping   = inBurst ? 0.70 : 0.86;
+        // Fast -> slow (dash then glide)
+        const stiffness = inDash ? (SLOW ? 0.26 : 0.32) : (SLOW ? 0.10 : 0.14);
+        const damping   = inDash ? 0.68 : 0.86;
 
         state.vx = (state.vx + (state.targetX - state.x)*stiffness) * damping;
         state.vy = (state.vy + (state.targetY - state.y)*stiffness) * damping;
@@ -691,7 +637,6 @@
         state.x += state.vx;
         state.y += state.vy;
 
-        // Bounds
         const b = viewportBounds();
         const bx = clamp(state.x, b.minX, b.maxX);
         const by = clamp(state.y, b.minY, b.maxY);
@@ -699,7 +644,6 @@
         if (by !== state.y) state.vy *= -0.55;
         state.x = bx; state.y = by;
 
-        // Final hard avoid if drifting into Yes
         if (overlapsYes(state.x, state.y)){
           const safe = resolveAvoidYes(state.x, state.y);
           state.x = safe.x; state.y = safe.y;
@@ -716,71 +660,53 @@
         state.rafId = moving ? requestAnimationFrame(tick) : 0;
       }
 
-      /* =======================
-         Evasion triggers:
-         Only run when pointer is about to TOUCH the button.
-         ======================= */
-      function maybeRunFromPointer(px,py, isTouch=false){
+      // ONLY run when within 7px of edge
+      function maybeRun(px,py,isTouch){
         if (!state.evasionEnabled) return;
 
-        // Ensure we're in roaming mode only when needed
-        if (!state.floating) detachNoToViewport();
-
-        // Compute "about to touch" using distance to button edge
         const rect = els.no.getBoundingClientRect();
         const threshold = isTouch ? CONFIG.nearEdgeTouchPx : CONFIG.nearEdgePx;
         const d = distToRectEdge(px,py,rect);
+        if (d > threshold) return;
 
-        if (d <= threshold){
-          showTipOnce();
-          startBurst();
-          const safe = pickRunTarget(px,py);
-          state.targetX = safe.x;
-          state.targetY = safe.y;
-          ensureRaf();
-        }
+        showTipOnce();
+        detachNoToViewport();
+        startDash();
+        const safe = pickRunTarget(px,py);
+        state.targetX = safe.x;
+        state.targetY = safe.y;
+        ensureRaf();
       }
 
-      // Desktop: use pointermove but only acts when near the No rect
-      function onPointerMove(e){
-        if (!state.evasionEnabled || prefersReducedMotion) return;
-        if (!state.floating) {
-          // If not floating yet, still measure in-flow rect
-          // and only detach once truly near-touch.
-        }
-        maybeRunFromPointer(e.clientX, e.clientY, false);
-      }
-
-      // Touch: react on touchstart to avoid taps
-      function onTouchStart(e){
-        if (!state.evasionEnabled) return;
+      // Event handlers on the No button only (prevents auto-detach)
+      function onNoPointerMove(e){ maybeRun(e.clientX, e.clientY, false); }
+      function onNoPointerEnter(e){ maybeRun(e.clientX, e.clientY, false); }
+      function onNoTouchStart(e){
         const t = e.touches && e.touches[0];
         if (!t) return;
-        showTipOnce();
-        maybeRunFromPointer(t.clientX, t.clientY, true);
+        maybeRun(t.clientX, t.clientY, true);
       }
 
-      // Click: never allow success
       function onNoClick(e){
         e.preventDefault();
         e.stopPropagation();
         showTipOnce();
         setAria("Nice try 😅");
-        const x = e.clientX || (e.touches && e.touches[0]?.clientX) || (window.innerWidth/2);
-        const y = e.clientY || (e.touches && e.touches[0]?.clientY) || (window.innerHeight/2);
-        startBurst();
-        const safe = pickRunTarget(x,y);
-        state.targetX = safe.x; state.targetY = safe.y;
+        const px = e.clientX || window.innerWidth/2;
+        const py = e.clientY || window.innerHeight/2;
+        detachNoToViewport();
+        startDash();
+        const safe = pickRunTarget(px,py);
+        state.targetX = safe.x;
+        state.targetY = safe.y;
         ensureRaf();
       }
 
-      // Keyboard: keep focusable but instantly relocate
       function onNoFocus(){
         if (!state.evasionEnabled) return;
         showTipOnce();
         detachNoToViewport();
-        startBurst();
-        // jump away from center
+        startDash();
         const px = window.innerWidth*0.5 + rand(-40,40);
         const py = window.innerHeight*0.5 + rand(-40,40);
         const safe = pickRunTarget(px,py);
@@ -800,9 +726,7 @@
         }
       }
 
-      /* =======================
-         Konami: toggle evasion
-         ======================= */
+      // Konami toggle
       const konami = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
       let ki = 0;
       function onKonami(e){
@@ -814,31 +738,27 @@
             state.evasionEnabled = !state.evasionEnabled && !DEBUG;
             setAria(state.evasionEnabled ? "Evasion on 😇" : "Evasion off (dev) ✅");
           }
-        } else {
-          ki = 0;
-        }
+        } else ki = 0;
       }
 
-      /* =======================
-         Boot
-         ======================= */
       function boot(){
         loadPersisted();
+        els.yes.addEventListener("click", () => {
+          localStorage.setItem(CONFIG.storageKey, "1");
+          setAcceptedUI();
+          pulseYes();
+          confetti.burstAtElement(els.yes, CONFIG.confettiBurstCount);
+          setAria("Yay! Valentine accepted.");
+        });
 
-        els.yes.addEventListener("click", accept);
-
-        // Global pointer tracking (only triggers when near-touch)
-        window.addEventListener("pointermove", onPointerMove, { passive:true });
-
-        // Touch
-        window.addEventListener("touchstart", onTouchStart, { passive:true });
-
-        // No interactions
+        // Attach events ONLY to No (prevents early movement)
+        els.no.addEventListener("pointermove", onNoPointerMove, { passive:true });
+        els.no.addEventListener("pointerenter", onNoPointerEnter, { passive:true });
+        els.no.addEventListener("touchstart", onNoTouchStart, { passive:true });
         els.no.addEventListener("click", onNoClick);
         els.no.addEventListener("focus", onNoFocus);
         els.no.addEventListener("keydown", onNoKeydown);
 
-        // Resize: keep inside bounds + away from Yes
         window.addEventListener("resize", () => {
           if (!state.floating) return;
           const b = viewportBounds();
